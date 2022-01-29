@@ -87,13 +87,13 @@ namespace CIS580GameProject0
             if (quit) quitTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (quitTimer > 0.4) quitted = true;
 
-            if (Q.CollidesWith(frog.Bound))
+            if (Q.CollidesWith(frog.Bound) && frog.space)
                 q = true;
-            if (q && U.CollidesWith(frog.Bound))
+            if (q && U.CollidesWith(frog.Bound) && frog.space)
                 qu = true;
-            if (qu && I.CollidesWith(frog.Bound))
+            if (qu && I.CollidesWith(frog.Bound) && frog.space)
                 qui = true;
-            if (qui && T.CollidesWith(frog.Bound))
+            if (qui && T.CollidesWith(frog.Bound) && frog.space)
                 quit = true;
 
             base.Update(gameTime);
