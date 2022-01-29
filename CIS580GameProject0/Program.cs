@@ -7,7 +7,7 @@ namespace CIS580GameProject0
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new Game0())
                 game.Run();
         }
     }
