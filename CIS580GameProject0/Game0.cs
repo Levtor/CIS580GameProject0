@@ -15,10 +15,10 @@ namespace CIS580GameProject0
         private Texture2D atlas;
         private SpriteFont tnr;
 
-        private BoundingSquare Q;
-        private BoundingSquare U;
-        private BoundingSquare I;
-        private BoundingSquare T;
+        private LetterSprite Q;
+        private LetterSprite U;
+        private LetterSprite I;
+        private LetterSprite T;
 
         private bool q = false;
         private bool qu = false;
@@ -27,7 +27,7 @@ namespace CIS580GameProject0
         private bool quitted = false;
         private double quitTimer;
 
-        List<int> order;
+        List<LetterSprite> letter = new List<LetterSprite>();
 
         public Game0()
         {
@@ -41,26 +41,16 @@ namespace CIS580GameProject0
             // TODO: Add your initialization logic here
             frog = new FrogSprite();
 
-            order = new List<int>();
+            
             for (int i = 0; i < 26; i++)
             {
-                order.Add(i);
-            }
-            Random rng = new Random();
-            int n = order.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                int value = order[k];
-                order[k] = order[n];
-                order[n] = value;
+                letter.Add(new LetterSprite(i));
             }
 
-            Q = new BoundingSquare(116 + 80 * (order[16] % 6), 66 + 80 * (order[16] / 6), 48);
-            U = new BoundingSquare(116 + 80 * (order[20] % 6), 66 + 80 * (order[20] / 6), 48);
-            I = new BoundingSquare(116 + 80 * (order[8] % 6), 66 + 80 * (order[8] / 6), 48);
-            T = new BoundingSquare(116 + 80 * (order[19] % 6), 66 + 80 * (order[19] / 6), 48);
+            Q = letter[16];
+            U = letter[20];
+            I = letter[8];
+            T = letter[19];
 
             base.Initialize();
         }
@@ -71,6 +61,10 @@ namespace CIS580GameProject0
 
             // TODO: use this.Content to load your game content here
             frog.LoadContent(Content);
+            for (int i = 0; i < 26; i++)
+            {
+                letter[i].LoadContent(Content); 
+            }
             atlas = Content.Load<Texture2D>("colored_packed");
             tnr = Content.Load<SpriteFont>("TNR");
 
@@ -83,17 +77,21 @@ namespace CIS580GameProject0
 
             // TODO: Add your update logic here
             frog.Update(gameTime);
+            for (int i = 0; i < 26; i++)
+            {
+                letter[i].Update(gameTime);
+            }
 
             if (quit) quitTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (quitTimer > 0.4) quitted = true;
 
-            if (Q.CollidesWith(frog.Bound) && frog.space)
+            if (Q.Bound.CollidesWith(frog.Bound) && frog.space)
                 q = true;
-            if (q && U.CollidesWith(frog.Bound) && frog.space)
+            if (q && U.Bound.CollidesWith(frog.Bound) && frog.space)
                 qu = true;
-            if (qu && I.CollidesWith(frog.Bound) && frog.space)
+            if (qu && I.Bound.CollidesWith(frog.Bound) && frog.space)
                 qui = true;
-            if (qui && T.CollidesWith(frog.Bound) && frog.space)
+            if (qui && T.Bound.CollidesWith(frog.Bound) && frog.space)
                 quit = true;
 
             base.Update(gameTime);
@@ -104,7 +102,8 @@ namespace CIS580GameProject0
             GraphicsDevice.Clear(Color.BlanchedAlmond);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            SamplerState samplerState = SamplerState.PointClamp;
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, samplerState, null, null, null, null);
             Color color = Color.White;
             if (q) color = Color.Yellow;
             if (qu) color = Color.Orange;
@@ -113,7 +112,7 @@ namespace CIS580GameProject0
 
             for (int i = 0; i < 26; i++)
             {
-                spriteBatch.Draw(atlas, new Vector2(100 + 80 * (order[i] % 6), 50 + 80 * (order[i] / 6)), new Rectangle(16*(35 + i%13), 16*(18 + i/13), 16, 16), color, 0, new Vector2(0,0), 5, SpriteEffects.None, 0);
+                letter[i].Draw(gameTime, spriteBatch, color);
             }
             
             frog.Draw(gameTime, spriteBatch);

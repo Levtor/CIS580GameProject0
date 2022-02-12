@@ -52,7 +52,11 @@ namespace CIS580GameProject0
             sit = true;
             space = false;
             // Apply keyboard movement
-            if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                space = true;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
             {
                 position += new Vector2(0, -1*speed);
                 sit = false;
@@ -75,14 +79,8 @@ namespace CIS580GameProject0
                 sit = false;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Space))
-            {
-                space = true;
-            }
-
             // Update animation timer
             if (!sit) animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
 
             Bound.X = position.X + 16;
             Bound.Y = position.Y + 16;
