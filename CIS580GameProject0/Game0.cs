@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace CIS580GameProject0
 {
@@ -14,6 +16,8 @@ namespace CIS580GameProject0
         private FrogSprite frog;
         private Texture2D atlas;
         private SpriteFont tnr;
+        private SoundEffect letterHit;
+        private Song backgroundMusic;
 
         private LetterSprite Q;
         private LetterSprite U;
@@ -67,7 +71,10 @@ namespace CIS580GameProject0
             }
             atlas = Content.Load<Texture2D>("colored_packed");
             tnr = Content.Load<SpriteFont>("TNR");
-
+            letterHit = Content.Load<SoundEffect>("LetterHit");
+            backgroundMusic = Content.Load<Song>("Lobo Loco - Woke up This Morning - RocknRoll (ID 1672)");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(backgroundMusic);
         }
 
         protected override void Update(GameTime gameTime)
@@ -85,14 +92,26 @@ namespace CIS580GameProject0
             if (quit) quitTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (quitTimer > 0.4) quitted = true;
 
-            if (Q.Bound.CollidesWith(frog.Bound) && frog.space)
+            if (!q && Q.Bound.CollidesWith(frog.Bound) && frog.space)
+            {
                 q = true;
-            if (q && U.Bound.CollidesWith(frog.Bound) && frog.space)
+                letterHit.Play();
+            }
+            if (q && !qu && U.Bound.CollidesWith(frog.Bound) && frog.space)
+            {
                 qu = true;
-            if (qu && I.Bound.CollidesWith(frog.Bound) && frog.space)
+                letterHit.Play();
+            }
+            if (qu && !qui && I.Bound.CollidesWith(frog.Bound) && frog.space)
+            {
                 qui = true;
-            if (qui && T.Bound.CollidesWith(frog.Bound) && frog.space)
+                letterHit.Play();
+            }
+            if (qui && !quit && T.Bound.CollidesWith(frog.Bound) && frog.space)
+            {
                 quit = true;
+                letterHit.Play();
+            }
 
             base.Update(gameTime);
         }

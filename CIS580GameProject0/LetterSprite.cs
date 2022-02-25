@@ -23,7 +23,7 @@ namespace CIS580GameProject0
         private Vector2 center;
         private short radius;
         private double circleTimer;
-        private double speedMult = .05;
+        private double speedMult = 100;
 
         public BoundingSquare Bound = new BoundingSquare(0, 0, 32);
 
@@ -33,8 +33,8 @@ namespace CIS580GameProject0
             Random rng = new Random();
             ID = id;
             radius = (short)rng.Next(8, 104);
-            float X = (int)rng.Next(100 + radius + 16, 700 - radius - 16);
-            float Y = (int)rng.Next(60 + radius + 16, 420 - radius - 16);
+            float X = Math.Clamp((int)rng.Next(80, 800-80), 100 + radius + 16, 700 - radius - 16);
+            float Y = Math.Clamp((int)rng.Next(48, 480-48), 60 + radius + 16, 420 - radius - 16);
             center = new Vector2(X, Y);
             circleTimer = rng.NextDouble() * 2 * Math.PI;
         }
@@ -57,7 +57,7 @@ namespace CIS580GameProject0
             keyboardState = Keyboard.GetState();
 
             // Apply keyboard movement
-            circleTimer += gameTime.ElapsedGameTime.TotalSeconds * (104 - radius) * speedMult;
+            circleTimer += gameTime.ElapsedGameTime.TotalSeconds * speedMult / radius;
             if (circleTimer >= 2 * Math.PI)
             {
                 circleTimer -= 2 * Math.PI;

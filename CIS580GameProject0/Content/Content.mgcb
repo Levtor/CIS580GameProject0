@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:colored_packed.png
 
+#begin LetterHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:LetterHit.wav
+
+#begin Lobo Loco - Woke up This Morning - RocknRoll (ID 1672).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Lobo Loco - Woke up This Morning - RocknRoll (ID 1672).mp3
+
 #begin TNR.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
