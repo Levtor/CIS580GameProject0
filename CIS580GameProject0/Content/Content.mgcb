@@ -37,10 +37,17 @@
 /processorParam:Quality=Best
 /build:Lobo Loco - Woke up This Morning - RocknRoll (ID 1672).mp3
 
-#begin TNR.spritefont
+#begin TNR12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:TNR.spritefont
+/build:TNR12.spritefont
+
+#begin TNR30.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:TNR30.spritefont
 

@@ -17,7 +17,7 @@ namespace CIS580GameProject0
 
         private Texture2D texture;
 
-        private int ID;
+        public int ID;
 
         private Vector2 position = Vector2.Zero;
         private Vector2 center;
